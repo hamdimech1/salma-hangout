@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Salma — Official Hangout Request</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ff6b9d 0%, #ffa07a 40%, #ffd700 100%);
+      font-family: 'Nunito', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .wrapper {
+      background: white;
+      border-radius: 30px;
+      padding: 40px 36px 36px;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wrapper::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 150px; height: 150px;
+      background: #ff6b9d22;
+      border-radius: 50%;
+    }
+    .wrapper::after {
+      content: '';
+      position: absolute;
+      bottom: -50px; left: -50px;
+      width: 180px; height: 180px;
+      background: #ffd70022;
+      border-radius: 50%;
+    }
+
+    .stamp {
+      position: absolute;
+      top: 18px; right: 20px;
+      background: #ff4444;
+      color: white;
+      font-weight: 900;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      transform: rotate(8deg);
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px #ff444466;
+    }
+
+    .emoji-row {
+      font-size: 40px;
+      text-align: center;
+      margin-bottom: 10px;
+      animation: bounce 1.8s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 23px;
+      font-weight: 900;
+      color: #333;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    h1 .name { color: #ff6b9d; }
+
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #999;
+      margin-bottom: 26px;
+    }
+
+    /* EXCUSE BOX */
+    .excuse-box {
+      background: #fff3f3;
+      border: 2px dashed #ff6b9d;
+      border-radius: 16px;
+      padding: 14px 44px 14px 16px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .excuse-label {
+      font-size: 10px;
+      font-weight: 900;
+      color: #ff6b9d;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .latest-badge {
+      display: inline-block;
+      background: #ff4444;
+      color: white;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      padding: 2px 7px;
+      border-radius: 20px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .excuse-text {
+      font-size: 14px;
+      color: #555;
+      font-style: italic;
+      min-height: 36px;
+      line-height: 1.5;
+    }
+    .excuse-refresh {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      transition: transform 0.35s;
+      line-height: 1;
+    }
+    .excuse-refresh:hover { transform: rotate(180deg) scale(1.2); }
+
+    /* FIELDS */
+    .field { margin-bottom: 18px; }
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 13px;
+      color: #444;
+      margin-bottom: 6px;
+    }
+    label .hint { font-weight: 400; color: #bbb; font-size: 12px; margin-left: 4px; }
+
+    input[type="date"],
+    input[type="time"],
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #eee;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Nunito', sans-serif;
+      color: #333;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+      background: #fafafa;
+    }
+    input:focus {
+      border-color: #ff6b9d;
+      box-shadow: 0 0 0 3px #ff6b9d1a;
+      background: white;
+    }
+
+    /* LOCATION */
+
+    /* SUBMIT */
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      margin-top: 8px;
+      background: linear-gradient(90deg, #ff6b9d, #ffa07a);
+      border: none;
+      border-radius: 16px;
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 17px;
+      font-weight: 900;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      box-shadow: 0 6px 20px #ff6b9d44;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+    .submit-btn:hover  { transform: translateY(-2px); box-shadow: 0 10px 28px #ff6b9d55; }
+    .submit-btn:active { transform: translateY(1px);  box-shadow: 0 3px 12px #ff6b9d33; }
+
+    .fine-print {
+      text-align: center;
+      font-size: 11px;
+      color: #ccc;
+      margin-top: 12px;
+      line-height: 1.5;
+    }
+
+    /* RESULT */
+    .result {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 6px 0;
+    }
+    .result .big-emoji {
+      font-size: 72px;
+      margin-bottom: 12px;
+      animation: pop 0.45s cubic-bezier(.36,1.56,.64,1) both;
+    }
+    @keyframes pop {
+      0%   { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .result h2 { font-size: 24px; font-weight: 900; color: #333; margin-bottom: 8px; }
+    .result h2 .name { color: #ff6b9d; }
+    .result p  { font-size: 14px; color: #777; margin-bottom: 6px; line-height: 1.6; }
+
+    .confirm-card {
+      background: linear-gradient(135deg, #fff0f5, #fffbea);
+      border: 2px solid #ff6b9d33;
+      border-radius: 18px;
+      padding: 18px 22px;
+      margin: 14px 0;
+      width: 100%;
+      text-align: left;
+    }
+    .confirm-card .row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: #444;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .confirm-card .row:last-child { margin-bottom: 0; }
+    .confirm-card .row .val { font-weight: 400; color: #666; }
+    .confirm-card .row .val a {
+      color: #4285F4;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .confirm-card .row .val a:hover { text-decoration: underline; }
+
+    .status-pill {
+      display: inline-block;
+      background: linear-gradient(90deg, #ff6b9d, #ffa07a);
+      color: white;
+      font-weight: 900;
+      font-size: 12px;
+      padding: 3px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .reset-btn {
+      background: none;
+      border: 2px solid #eee;
+      border-radius: 12px;
+      padding: 10px 22px;
+      font-family: 'Nunito', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      color: #aaa;
+      transition: border 0.2s, color 0.2s;
+      margin-top: 8px;
+    }
+    .reset-btn:hover { border-color: #ff6b9d; color: #ff6b9d; }
+
+    /* CONFETTI */
+    .confetti-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 999;
+    }
+    .confetti-piece {
+      position: absolute;
+      border-radius: 2px;
+      animation: fall linear forwards;
+    }
+    @keyframes fall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* shake */
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%     { transform: translateX(-6px); }
+      40%     { transform: translateX(6px); }
+      60%     { transform: translateX(-4px); }
+      80%     { transform: translateX(4px); }
+    }
+    .shake { animation: shake 0.4s ease !important; border-color: #ff4444 !important; }
+  </style>
+</head>
+<body>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<div class="wrapper">
+  <div class="stamp">URGENT 🚨</div>
+
+  <!-- ── FORM ── -->
+  <div id="formSection">
+    <div class="emoji-row">🎉✨🥳</div>
+    <h1>Dear <span class="name">Salma</span>,<br>i will kill you if u dont fill this form</h1>
+    <p class="subtitle">This is an official, legally-binding hangout invitation.</p>
+
+    <div class="excuse-box">
+      <div class="excuse-label">
+        Salma's Latest Excuse
+        <span class="latest-badge">LIVE</span>
+      </div>
+      <div class="excuse-text" id="excuseText"></div>
+      <button class="excuse-refresh" title="Cycle excuses" onclick="newExcuse()">🔄</button>
+    </div>
+
+    <div class="field">
+      <label>📅 Proposed Date </label>
+      <input type="date" id="dateInput" />
+    </div>
+
+    <div class="field">
+      <label>⏰ Meet At </label>
+      <input type="time" id="timeStart" value="14:00" />
+    </div>
+
+    <div class="field">
+      <label>📍 Location <span class="hint">(where are we going?)</span></label>
+      <input type="text" id="location" placeholder="e.g. Costa Coffee, City Centre" />
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="submitForm()">
+      🚀 Send This to Salma (she can't say no)
+    </button>
+    <p class="fine-print">
+      * By scrolling down this page Salma has already legally agreed to attend.<br>
+      Terms & conditions enforced by the Ministry of Friendship.
+    </p>
+  </div>
+
+  <!-- ── RESULT ── -->
+  <div class="result" id="resultSection">
+    <div class="big-emoji" id="resultEmoji">🎉</div>
+    <h2>It's Happening, <span class="name">Salma!</span></h2>
+    <p>Your attendance has been officially registered in the<br><strong>"No More Excuses" database</strong>. Case closed. 📁</p>
+   
+</div>
+
+<script>
+  // ─── STEP 1: paste your Formspree form ID here (see instructions below) ───
+  const FORMSPREE_ID = 'xqejgzaz';
+  // ──────────────────────────────────────────────────────────────────────────
+
+  const excuses = [
+    '"I\'m tired." 😴 (The classic. The original. The undefeated champion.)',
+    '"I\'m tired." Again. Still. Somehow. Always.',
+    '"I have stuff to do." (Salma, it\'s Sunday. What stuff.)',
+    '"Maybe next time!" (There is no next time, Salma.)',
+    '"I don\'t feel like going out." (Groundbreaking.)',
+    '"I\'m not in the mood." (For the 47th consecutive week.)',
+    '"It\'s too hot outside." 🥵',
+    '"It\'s too cold outside." 🥶 (There is no winning.)',
+    '"I need to rest." (From what, Salma. From what.)',
+    '"Let me see…" (She will not see. She already decided no.)',
+    '"I\'ll let you know!" (Narrator: she did not let her know.)',
+    '"I have a headache." (Conveniently scheduled every weekend.)',
+    '"I was literally just about to text you… I can\'t go." 💀',
+  ];
+
+  let excuseIdx = 0;
+  document.getElementById('excuseText').textContent = excuses[excuseIdx];
+
+  function newExcuse() {
+    excuseIdx = (excuseIdx + 1) % excuses.length;
+    const el = document.getElementById('excuseText');
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(4px)';
+    el.style.transition = 'opacity 0.15s, transform 0.15s';
+    setTimeout(() => {
+      el.textContent = excuses[excuseIdx];
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }, 150);
+  }
+
+  function fmt(t) {
+    const [h, m] = t.split(':');
+    const hour = parseInt(h);
+    return `${hour % 12 || 12}:${m} ${hour >= 12 ? 'PM' : 'AM'}`;
+  }
+
+  function fmtDate(s) {
+    const [y, mo, d] = s.split('-');
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const days   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const dt = new Date(+y, +mo - 1, +d);
+    return `${days[dt.getDay()]}, ${months[+mo - 1]} ${+d}`;
+  }
+
+  async function submitForm() {
+    const date     = document.getElementById('dateInput').value;
+    const timeVal  = document.getElementById('timeStart').value;
+    const location = document.getElementById('location').value.trim();
+
+    if (!date)     { flashShake('dateInput'); alert('📅 Pick a date — Salma needs advance notice (3–4 business weeks minimum).'); return; }
+    if (!location) { flashShake('location');  alert('📍 Add a location so Salma has no excuse not to find it!'); return; }
+
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = '⏳ Sending…';
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          date:     fmtDate(date),
+          time:     fmt(timeVal),
+          location: location,
+          _subject: '📅 Salma just confirmed a hangout!!',
+        }),
+      });
+
+      if (!res.ok) throw new Error('send failed');
+
+      showResult(date, timeVal, location);
+    } catch {
+      btn.textContent = '🚀 Send This to Salma (she can\'t say no)';
+      btn.disabled = false;
+      alert('❌ Could not send — make sure you\'ve set your Formspree form ID in the code (see the comment at the top of the script).');
+    }
+  }
+
+  function showResult(date, timeVal, location) {
+    document.getElementById('formSection').style.display = 'none';
+    const result = document.getElementById('resultSection');
+    result.style.display = 'flex';
+
+    const emojis = ['🎉','🥳','🎊','✨','💃','🙌'];
+    document.getElementById('resultEmoji').textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+    document.getElementById('confirmCard').innerHTML = `
+      <div class="row">📅 <div><span style="font-weight:900">Date</span><br><span class="val">${fmtDate(date)}</span></div></div>
+      <div class="row">⏰ <div><span style="font-weight:900">Meet At</span><br><span class="val">${fmt(timeVal)}</span></div></div>
+      <div class="row">📍 <div><span style="font-weight:900">Location</span><br><span class="val">${location}</span></div></div>
+      <div class="row">🚨 <div><span style="font-weight:900">Status</span><br><span class="val"><span class="status-pill">MANDATORY ATTENDANCE</span></span></div></div>
+    `;
+
+    launchConfetti();
+  }
+
+  function flashShake(id) {
+    const el = document.getElementById(id);
+    el.classList.remove('shake');
+    void el.offsetWidth;
+    el.classList.add('shake');
+    setTimeout(() => el.classList.remove('shake'), 500);
+  }
+
+  function resetForm() {
+    document.getElementById('resultSection').style.display = 'none';
+    const formSection = document.getElementById('formSection');
+    formSection.style.display = 'block';
+    document.getElementById('dateInput').value  = '';
+    document.getElementById('location').value   = '';
+    document.getElementById('timeStart').value  = '14:00';
+    const btn = document.getElementById('submitBtn');
+    btn.textContent = '🚀 Send This to Salma (she can\'t say no)';
+    btn.disabled = false;
+    excuseIdx = 0;
+    document.getElementById('excuseText').textContent = excuses[excuseIdx];
+  }
+
+  function launchConfetti() {
+    const container = document.getElementById('confettiContainer');
+    const colors = ['#ff6b9d','#ffa07a','#ffd700','#a8edea','#96e6a1','#c084fc','#fb923c'];
+    for (let i = 0; i < 90; i++) {
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      p.style.left              = Math.random() * 100 + 'vw';
+      p.style.top               = '-12px';
+      p.style.background        = colors[Math.floor(Math.random() * colors.length)];
+      p.style.width             = (5 + Math.random() * 9) + 'px';
+      p.style.height            = (5 + Math.random() * 9) + 'px';
+      p.style.animationDuration = (1.4 + Math.random() * 2) + 's';
+      p.style.animationDelay    = (Math.random() * 0.9) + 's';
+      container.appendChild(p);
+      setTimeout(() => p.remove(), 4500);
+    }
+  }
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  document.getElementById('dateInput').value = tomorrow.toISOString().split('T')[0];
+</script>
+</body>
+</html>
