@@ -500,13 +500,16 @@
         }),
       });
 
-      if (!res.ok) throw new Error('send failed');
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(`${res.status}: ${body.error || JSON.stringify(body)}`);
+      }
 
       showResult(date, timeVal, location);
-    } catch {
-      btn.textContent = '🚀 Send This to Salma (she can\'t say no)';
+    } catch (err) {
+      btn.textContent = 'confirm';
       btn.disabled = false;
-      alert('❌ Could not send — make sure you\'ve set your Formspree form ID in the code (see the comment at the top of the script).');
+      alert('❌ Could not send.\n\nReason: ' + err.message);
     }
   }
 
